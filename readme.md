@@ -76,7 +76,7 @@ echo $ks->consume();
 Add service provider to app.php
 ```php
 // bootstrap/app.php
-//*
+/*
 |--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
