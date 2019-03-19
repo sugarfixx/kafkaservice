@@ -76,6 +76,7 @@ echo $ks->consume();
 Add service provider to app.php
 ```php
 // bootstrap/app.php
+//*
 |--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
@@ -88,7 +89,7 @@ Add service provider to app.php
 $app->register(KafkaService\KafkaServiceProvider);
 ```
 
-Inject in controller
+To use the service just Inject it in controller
 ```php
 use KafkaService\KafkaInterface;
 
