@@ -1,0 +1,24 @@
+{
+    "name": "sugarfixx/kafkaservice",
+    "description": "Produce and Consume Kafka messages in PHP",
+    "type": "library",
+    "require-dev": {
+        "kwn/php-rdkafka-stubs": "~1.1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ingar Torsrud",
+            "email": "ingar.torsrud@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "KafkaService": "src/"
+        }
+    }
+}

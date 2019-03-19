@@ -1,0 +1,3 @@
+[submodule "vendor/kwn/php-kafka-stubs"]
+	path = vendor/kwn/php-kafka-stubs
+	url = https://github.com/kwn/php-rdkafka-stubs.git
