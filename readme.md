@@ -73,4 +73,43 @@ echo $ks->consume();
 ```
 
 ### Use with Lumen
-comming
+Add service provider to app.php
+```php
+// bootstrap/app.php
+/*
+|--------------------------------------------------------------------------
+| Register Service Providers
+|--------------------------------------------------------------------------
+|
+| Here we will register all of the application's service providers which
+| are used to bind services into the container. Service providers are
+| totally optional, so you are not required to uncomment this line.
+|
+*/
+$app->register(KafkaService\KafkaServiceProvider);
+```
+
+To use the service just Inject it in controller
+```php
+use KafkaService\KafkaInterface;
+
+class MyController extends Controller {
+
+    private $brokers;
+    
+    private $topic;
+    
+    $private $options;
+    
+    public function __construct(KafkaInteface $kafkaInterface)
+    {
+        $this->kafkaInterface = $kafkaInterface;
+    }
+    
+    public funciton consumeKafka()
+    {
+        $ks = $this->kafkaInterface->confugure($this->topic, $this->brokers, $this->options);
+        return $ks->consume();
+    }
+}
+```
