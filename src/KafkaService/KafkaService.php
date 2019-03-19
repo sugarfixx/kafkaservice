@@ -28,14 +28,16 @@ class KafkaService implements KafkaInterface
 
     public function __construct()
     {
-        $offsetStoragePath = storage_path(env('APP_LOG_PATH', 'logs/kafka-offset.log'));
-        $this->params = array_merge($this->params, ['offsetStoragePath' => $offsetStoragePath]);
+        if (function_exists('storage_path')) {
+            $offsetStoragePath = storage_path(env('APP_LOG_PATH', 'logs/kafka-offset.log'));
+            $this->params = array_merge($this->params, ['offsetStoragePath' => $offsetStoragePath]);
+        }
     }
 
     public function configure( $topic, $brokers, $options = [])
     {
         $this->topic = $topic;
-        $this->brokers = $brokers;
+        $this->brokers = is_array($brokers) ? $brokers : [ $brokers ];
         $this->params = array_merge(
             $this->params,
             // remove unwanted keys passes as $params
