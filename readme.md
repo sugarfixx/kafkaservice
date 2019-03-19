@@ -3,7 +3,7 @@
 Requiers librdkafka extension installed se https://github.com/arnaud-lb/php-rdkafka
 
 
-###Installation
+### Installation
 
 
 Add this to composer.json
@@ -33,6 +33,8 @@ require "vendor/autoload.php";
 ```
 #### Usage example
 ```php
+use KafkaService\KafkaService;
+
 // set the topic
 $topic = '<myTopic>';
 
@@ -50,7 +52,7 @@ $options = [
     'groupId' => '<yourGgroupId>' 
 ];
 
-$ks = new \KafkaService\KafkaService();
+$ks = new KafkaService();
 
 $ks->configure($topic, $brokers, $options);
 
@@ -63,7 +65,7 @@ $ks->produce('<your message>');
 ```
 
 #### Test produce
-To test the producer you can simply pass null as message and at true as a second param to enable a predefined loop creating 10 massages on the broker. 
+To test the producer you can simply pass null as message and at true as a second param to enable a predefined loop creating 10 messages on the broker. 
 ```php
 $ks->produce(null, true);
 
