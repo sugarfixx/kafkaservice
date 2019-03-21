@@ -11,6 +11,7 @@ namespace KafkaService;
 use RdKafka\Producer;
 use RdKafka\Consumer;
 use RdKafka\TopicConf;
+use RdKafka\Conf;
 
 class KafkaService implements KafkaInterface
 {
@@ -34,10 +35,10 @@ class KafkaService implements KafkaInterface
         }
     }
 
-    public function configure( $topic, $brokers, $options = [])
+    public function configure($topic, $brokers, $options = [])
     {
         $this->topic = $topic;
-        $this->brokers = is_array($brokers) ? $brokers : [ $brokers ];
+        $this->brokers = is_array($brokers) ? $brokers : [$brokers];
         $this->params = array_merge(
             $this->params,
             // remove unwanted keys passes as $params
@@ -55,8 +56,7 @@ class KafkaService implements KafkaInterface
             for ($i = 0; $i < 10; $i++) {
                 $topic->produce(RD_KAFKA_PARTITION_UA, 0, "Message $i");
             }
-        }
-        else {
+        } else {
             $topic->produce(RD_KAFKA_PARTITION_UA, 0, $message);
         }
 
@@ -64,14 +64,28 @@ class KafkaService implements KafkaInterface
 
     public function consume()
     {
-        $consumer = new Consumer();
+        $conf = new Conf();
+        $conf->set('group.id', $this->params['groupId']); // required if "offset.store.method" : broker
+
+        $consumer = new Consumer($conf);
         $consumer->setLogLevel($this->params['logLevel']);
         $consumer->addBrokers(implode(',', $this->brokers));
 
+        return (is_array($this->topic)) ?  $this->getMultipleTopics( $consumer ) : $this->getSingleTopic( $consumer );
+    }
+
+    private function topicConf()
+    {
         $topicConf = new TopicConf();
         $topicConf->set('group.id', $this->params['groupId']); // required if "offset.store.method" : broker
         $topicConf->set("offset.store.method", $this->params['offsetStoreMethod']); // none, file, broker
         $topicConf->set("offset.store.path", $this->params['offsetStoragePath']);
+        return $topicConf;
+    }
+
+    private function getSingleTopic( $consumer )
+    {
+        $topicConf = $this->topicConf();
 
         $topic = $consumer->newTopic($this->topic, $topicConf);
         $topic->consumeStart(0, $this->params['offset']);
@@ -79,6 +93,31 @@ class KafkaService implements KafkaInterface
         $payload = [];
         while (true) {
             $msg = $topic->consume(0, 1000);
+            if ($msg->err) {
+                echo $msg->errstr(), "\n";
+                break;
+            } else {
+                $payload[] = $msg->payload;
+            }
+        }
+        return !empty($payload) ? $payload : null;
+    }
+
+    private function getMultipleTopics( $consumer )
+    {
+        $topicConf = $this->topicConf();
+
+        $queue = $consumer->newQueue();
+        $i = 0;
+        foreach ($this->topic as $topic) {
+            $i++;
+            ${'topic' . $i} = $consumer->newTopic($topic, $topicConf);
+            ${'topic' . $i}->consumeQueueStart(0, $this->params['offset'], $queue);
+        }
+
+        $payload = [];
+        while (true) {
+            $msg = $queue->consume(0, 1000);
             if ($msg->err) {
                 echo $msg->errstr(), "\n";
                 break;
