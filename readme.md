@@ -6,11 +6,8 @@ Requiers librdkafka extension installed se https://github.com/arnaud-lb/php-rdka
 ### Installation
 
 
-Add this to composer.json
+To require service into existing project, add this to composer.json
 ````{
-    "require": {
-        "sugarfixx/kafkaservice":"0.1"
-    },
     "repositories": [
       {
         "type": "vcs",
@@ -22,7 +19,29 @@ Add this to composer.json
 
 Run
 ```angular2html
-composer install
+composer require sugarfixx/kafkaservice
+```
+Or if you are starting a blank project from a clean composer.json
+```angular2html
+
+{
+    "require": {
+            "sugarfixx/kafkaservice":"0.1"
+        },
+        "repositories": [
+          {
+            "type": "vcs",
+            "url": "git@github.com:sugarfixx/kafkaservice.git"
+          }
+        ]   
+    }
+}
+```
+
+
+Run
+```angular2html
+composer require sugarfixx/kafkaservice
 ```
 
 ### Simple usage
