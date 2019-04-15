@@ -57,6 +57,9 @@ use KafkaService\KafkaService;
 // set the topic
 $topic = '<myTopic>';
 
+// multiple topics
+$topic = ['<topic1>', '<topic2>'];
+
 // set up brokers 
 $brokers = ['<broker1>', '<broker2>']; // string or array
 

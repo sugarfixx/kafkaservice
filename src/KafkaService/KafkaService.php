@@ -93,7 +93,9 @@ class KafkaService implements KafkaInterface
         $payload = [];
         while (true) {
             $msg = $topic->consume(0, 1000);
-            if ($msg->err) {
+            if (null === $msg) {
+                continue;
+            } elseif ($msg->err) {
                 echo $msg->errstr(), "\n";
                 break;
             } else {
@@ -118,7 +120,9 @@ class KafkaService implements KafkaInterface
         $payload = [];
         while (true) {
             $msg = $queue->consume(0, 1000);
-            if ($msg->err) {
+            if (null === $msg) {
+                continue;
+            } elseif ($msg->err) {
                 echo $msg->errstr(), "\n";
                 break;
             } else {
