@@ -24,7 +24,7 @@ class KafkaService implements KafkaInterface
         'offset' => RD_KAFKA_OFFSET_STORED,
         'offsetStoreMethod' => 'file',
         'offsetStoragePath' => null,
-        'groupId' => 'uefaDataFeedService'
+        'groupId' => 'kafkaService'
     ];
 
     public function __construct()
