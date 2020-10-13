@@ -11,6 +11,7 @@ namespace KafkaService;
 
 interface KafkaInterface
 {
+
     public function configure( $topic, $brokers);
 
     public function produce();
