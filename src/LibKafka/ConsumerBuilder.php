@@ -16,12 +16,12 @@ class ConsumerBuilder implements KafkaBuilder
         // TODO: Implement setConfig() method.
     }
 
-    public function setTopicConfig()
+    public function setTopicConfig($conf)
     {
         // TODO: Implement setTopicConfig() method.
     }
 
-    public function createKafka()
+    public function createKafka($conf)
     {
         // TODO: Implement createKafka() method.
     }

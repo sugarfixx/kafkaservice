@@ -13,9 +13,9 @@ interface KafkaBuilder
 {
     public function setConfig();
 
-    public function setTopicConfig();
+    public function setTopicConfig($conf);
 
-    public function createKafka();
+    public function createKafka($conf);
 
     public function getKafka(): Kafka;
 }
