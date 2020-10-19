@@ -15,8 +15,11 @@ class Kafka
 {
     public $kafka;
 
+    public $config;
 
-    public function __construct()
+
+    public function __construct($config, $type = "consumer")
     {
+
     }
 }

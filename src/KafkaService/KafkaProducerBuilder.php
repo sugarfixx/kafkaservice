@@ -16,12 +16,12 @@ class KafkaProducerBuilder implements KafkaBuilderInterface
         // TODO: Implement setBrokers() method.
     }
 
-    public function setConfig()
+    public function setConfig($conf)
     {
         // TODO: Implement setConfig() method.
     }
 
-    public function setTopicConf()
+    public function setTopicConf($conf)
     {
         // TODO: Implement setTopicConf() method.
     }

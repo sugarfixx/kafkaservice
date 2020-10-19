@@ -13,9 +13,9 @@ interface KafkaBuilderInterface
 {
     public function setBrokers();
 
-    public function setConfig();
+    public function setConfig($conf);
 
-    public function setTopicConf();
+    public function setTopicConf($conf);
 
     public function getKafka();
 }

@@ -11,11 +11,18 @@ namespace KafkaService;
 
 class KafkaDirector
 {
+    private $data;
+
+    public function __construct($conf)
+    {
+        $this->data = $conf;
+    }
+
     public function build(KafkaBuilderInterface $builder)
     {
         $builder->setBrokers();
-        $builder->setConfig();
-        $builder->setTopicConf();
+        $builder->setConfig($this->data);
+        $builder->setTopicConf($this->data);
         return $builder->getKafka();
     }
 }
